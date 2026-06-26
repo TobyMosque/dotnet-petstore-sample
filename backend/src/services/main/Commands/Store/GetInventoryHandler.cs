@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Requests.Store;
@@ -18,7 +18,7 @@ namespace PetStore.Services.Commands.Store
             _db = db;
         }
 
-        public async Task<IDictionary<string, int>> Handle(GetInventoryRequest request, CancellationToken cancellationToken)
+        public async ValueTask<IDictionary<string, int>> Handle(GetInventoryRequest request, CancellationToken cancellationToken)
         {
             var groups = await _db.Pets
                 .GroupBy(p => p.Status)

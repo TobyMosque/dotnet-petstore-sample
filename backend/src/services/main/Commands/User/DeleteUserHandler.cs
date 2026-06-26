@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Requests.User;
@@ -16,7 +16,7 @@ namespace PetStore.Services.Commands.User
             _db = db;
         }
 
-        public async Task<bool> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
+        public async ValueTask<bool> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
             if (user == null) return false;

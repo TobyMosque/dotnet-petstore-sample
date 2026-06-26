@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Requests.Pet;
@@ -16,7 +16,7 @@ namespace PetStore.Services.Commands.Pet
             _db = db;
         }
 
-        public async Task<bool> Handle(DeletePetRequest request, CancellationToken cancellationToken)
+        public async ValueTask<bool> Handle(DeletePetRequest request, CancellationToken cancellationToken)
         {
             var pet = await _db.Pets
                 .Include(p => p.PhotoUrls)

@@ -1,4 +1,4 @@
-using MediatR;
+using Mediator;
 using PetStore.Services.Abstractions.Dtos;
 
 namespace PetStore.Services.Abstractions.Requests.User

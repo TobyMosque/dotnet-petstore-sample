@@ -1,10 +1,12 @@
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Services;
 using PetStore.Services.Settings;
 using RT.Comb;
+
+[assembly: MediatorOptions(ServiceLifetime = ServiceLifetime.Transient)]
 
 namespace PetStore.Services
 {
@@ -22,7 +24,7 @@ namespace PetStore.Services
                 opts.UseNpgsql(db.ConnectionString);
             });
 
-            services.AddMediatR(typeof(Register).Assembly);
+            services.AddMediator();
 
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IStoreService, StoreService>();

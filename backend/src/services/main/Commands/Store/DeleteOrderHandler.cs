@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Requests.Store;
@@ -16,7 +16,7 @@ namespace PetStore.Services.Commands.Store
             _db = db;
         }
 
-        public async Task<bool> Handle(DeleteOrderRequest request, CancellationToken cancellationToken)
+        public async ValueTask<bool> Handle(DeleteOrderRequest request, CancellationToken cancellationToken)
         {
             var order = await _db.Orders.FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
             if (order == null) return false;

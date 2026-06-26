@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Dtos;
@@ -18,7 +18,7 @@ namespace PetStore.Services.Commands.Store
             _db = db;
         }
 
-        public async Task<OrderDto> Handle(GetOrderByIdRequest request, CancellationToken cancellationToken)
+        public async ValueTask<OrderDto> Handle(GetOrderByIdRequest request, CancellationToken cancellationToken)
         {
             return await _db.Orders
                 .Where(o => o.Id == request.Id)
