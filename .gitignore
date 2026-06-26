@@ -5,6 +5,7 @@ backend/**/.vs/
 
 # Node / pnpm
 docs/node_modules/
+docs/.pnpm-store/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 _docs/
