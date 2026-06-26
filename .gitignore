@@ -1,0 +1,17 @@
+# .NET
+backend/**/bin/
+backend/**/obj/
+backend/**/.vs/
+
+# Node / pnpm
+docs/node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+_docs/
+
+# Docker
+*.env
+
+# OS
+.DS_Store
+Thumbs.db

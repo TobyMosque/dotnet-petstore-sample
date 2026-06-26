@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: petstore
+      POSTGRES_USER: petstore
+      POSTGRES_PASSWORD: petstore
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petstore"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: src/api/Dockerfile
+    environment:
+      RUNNING_ENVIRONMENT: docker
+      PETSTORE_CONNECTION_STRING: Host=db;Port=5432;Database=petstore;Username=petstore;Password=petstore
+    ports:
+      - "5000:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  docs:
+    build:
+      context: ./docs
+      dockerfile: Dockerfile
+    ports:
+      - "4001:80"
+
+volumes:
+  pgdata:

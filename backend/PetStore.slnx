@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/api/">
+    <Project Path="src/api/PetStore.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/domain/">
+    <Project Path="src/domain/PetStore.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/services/" />
+  <Folder Name="/src/services/abstractions/">
+    <Project Path="src/services/abstractions/PetStore.Services.Abstractions.csproj" />
+  </Folder>
+  <Folder Name="/src/services/main/">
+    <Project Path="src/services/main/PetStore.Services.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PetStore.Tests.csproj" />
+  </Folder>
+</Solution>

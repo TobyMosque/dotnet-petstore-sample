@@ -1,0 +1,16 @@
+services:
+  backend:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+  docs:
+    build:
+      target: source-stage
+    environment:
+      CI: "true"
+    volumes:
+      - ./docs:/src
+      - /src/node_modules
+    command: /bin/sh -c "pnpm i && pnpm run dev --host 0.0.0.0 --port 4000"
+    ports:
+      - "4000:4000"
