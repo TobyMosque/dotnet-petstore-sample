@@ -20,6 +20,10 @@ namespace PetStore.Api.Controllers
             _storeService = storeService;
         }
 
+        [HttpGet("order")]
+        public async Task<ActionResult<IList<OrderDto>>> GetAllOrders(CancellationToken ct)
+            => Ok(await _storeService.GetAllOrdersAsync(ct));
+
         [HttpGet("inventory")]
         public async Task<ActionResult<IDictionary<string, int>>> GetInventory(CancellationToken ct)
             => Ok(await _storeService.GetInventoryAsync(ct));
