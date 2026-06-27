@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Services.Abstractions.Dtos;
@@ -17,7 +17,7 @@ namespace PetStore.Services.Commands.User
             _db = db;
         }
 
-        public async Task<UserDto> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
+        public async ValueTask<UserDto> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == request.Username, cancellationToken);
             if (user == null) return null;

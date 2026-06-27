@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MediatR;
+using Mediator;
 
 namespace PetStore.Services.Abstractions.Requests.Store
 {

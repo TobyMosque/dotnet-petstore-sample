@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 using PetStore.Domain;
 using PetStore.Domain.Entities;
@@ -23,7 +23,7 @@ namespace PetStore.Services.Commands.Pet
             _comb = comb;
         }
 
-        public async Task<PetDto> Handle(AddPetRequest request, CancellationToken cancellationToken)
+        public async ValueTask<PetDto> Handle(AddPetRequest request, CancellationToken cancellationToken)
         {
             var tags = request.TagIds != null && request.TagIds.Count > 0
                 ? await _db.Tags.Where(t => request.TagIds.Contains(t.Id)).ToListAsync(cancellationToken)

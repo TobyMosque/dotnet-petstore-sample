@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
+using Mediator;
 using PetStore.Domain;
 using PetStore.Domain.Entities;
 using PetStore.Services.Abstractions.Dtos;
@@ -20,7 +20,7 @@ namespace PetStore.Services.Commands.Store
             _comb = comb;
         }
 
-        public async Task<OrderDto> Handle(PlaceOrderRequest request, CancellationToken cancellationToken)
+        public async ValueTask<OrderDto> Handle(PlaceOrderRequest request, CancellationToken cancellationToken)
         {
             var order = new Order
             {
