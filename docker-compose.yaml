@@ -35,5 +35,14 @@ services:
     ports:
       - "4001:80"
 
+  qa:
+    build:
+      context: ./qa
+      dockerfile: Dockerfile
+      args:
+        - API_URL=http://localhost:5000
+    ports:
+      - "4002:80"
+
 volumes:
   pgdata:
