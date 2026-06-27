@@ -1,4 +1,5 @@
 FROM node:lts-alpine AS base
+RUN corepack enable
 WORKDIR /src
 
 FROM base AS source-stage
