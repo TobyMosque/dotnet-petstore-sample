@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Mediator;
@@ -15,6 +16,9 @@ namespace PetStore.Services
         {
             _mediator = mediator;
         }
+
+        public Task<IList<UserDto>> GetAllUsersAsync(int skip, int take, CancellationToken ct)
+            => _mediator.Send(new GetAllUsersRequest { Skip = skip, Take = take }, ct).AsTask();
 
         public Task<UserDto> GetUserByNameAsync(string username, CancellationToken ct)
             => _mediator.Send(new GetUserByNameRequest { Username = username }, ct).AsTask();

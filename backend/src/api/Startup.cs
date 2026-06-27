@@ -20,6 +20,9 @@ namespace PetStore.Api
             services.AddPetStoreServices();
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy =>
+                    policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -27,6 +30,7 @@ namespace PetStore.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseCors();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PetStore v1"));
 

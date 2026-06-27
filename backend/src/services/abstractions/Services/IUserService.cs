@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using PetStore.Services.Abstractions.Dtos;
@@ -7,6 +8,7 @@ namespace PetStore.Services.Abstractions.Services
 {
     public interface IUserService
     {
+        Task<IList<UserDto>> GetAllUsersAsync(int skip, int take, CancellationToken ct);
         Task<UserDto> GetUserByNameAsync(string username, CancellationToken ct);
         Task<UserDto> CreateUserAsync(CreateUserRequest request, CancellationToken ct);
         Task<UserDto> UpdateUserAsync(UpdateUserRequest request, CancellationToken ct);

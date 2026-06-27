@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,13 @@ namespace PetStore.Api.Controllers
         {
             _userService = userService;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IList<UserDto>>> GetAllUsers(
+            [FromQuery] int skip = 0,
+            [FromQuery] int take = 20,
+            CancellationToken ct = default)
+            => Ok(await _userService.GetAllUsersAsync(skip, take, ct));
 
         [HttpGet("{username}")]
         public async Task<ActionResult<UserDto>> GetUserByName(string username, CancellationToken ct)
