@@ -1,5 +1,5 @@
 FROM node:lts-alpine AS base
-RUN corepack enable && corepack prepare pnpm@10 --activate
+RUN npm i --location=global pnpm@10
 WORKDIR /src
 
 FROM base AS source-stage

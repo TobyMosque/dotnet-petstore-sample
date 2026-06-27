@@ -18,6 +18,9 @@ namespace PetStore.Services
             _mediator = mediator;
         }
 
+        public Task<IList<OrderDto>> GetAllOrdersAsync(CancellationToken ct)
+            => _mediator.Send(new GetAllOrdersRequest(), ct).AsTask();
+
         public Task<IDictionary<string, int>> GetInventoryAsync(CancellationToken ct)
             => _mediator.Send(new GetInventoryRequest(), ct).AsTask();
 
