@@ -1,14 +1,13 @@
 FROM node:lts-alpine AS base
-RUN npm i --location=global pnpm@10
 WORKDIR /src
 
 FROM base AS source-stage
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 COPY . .
 
 FROM source-stage AS build-stage
-RUN pnpm run build
+RUN yarn build
 
 FROM nginx:alpine AS production-stage
 COPY --from=build-stage /src/.vitepress/dist /usr/share/nginx/html
