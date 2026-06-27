@@ -2,12 +2,9 @@
   "name": "petstore",
   "private": true,
   "scripts": {
-    "build": "docker compose -f docker-compose.yaml build",
-    "build:dev": "docker compose -f docker-compose.yaml -f docker-compose.dev.yaml build",
-    "up": "docker compose -f docker-compose.yaml up",
-    "up:dev": "docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up",
+    "build": "docker compose build",
+    "up": "docker compose up",
     "down": "docker compose down",
-    "down:dev": "docker compose -f docker-compose.yaml -f docker-compose.dev.yaml down",
     "logs": "docker compose logs -f",
     "logs:backend": "docker compose logs backend -f",
     "logs:docs": "docker compose logs docs -f"
