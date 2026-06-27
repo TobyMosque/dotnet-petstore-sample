@@ -79,8 +79,8 @@ namespace PetStore.Services
                 {
                     Id = _comb.Create(),
                     PetId = f.PickRandom(petIds),
-                    Quantity = f.Random.Bool() ? (int?)null : (int?)f.Random.Int(1, 10),
-                    ShipDate = f.Random.Bool() ? (DateTime?)null : (DateTime?)DateTime.SpecifyKind(f.Date.Future(), DateTimeKind.Utc),
+                    Quantity = f.Random.Int(1, 10).OrNull(f, .25f),
+                    ShipDate = DateTime.SpecifyKind(f.Date.Future(), DateTimeKind.Utc).OrNull(f, .25f),
                     Status = f.PickRandom("placed", "approved", "delivered").OrNull(f, .25f),
                     Complete = f.Random.Bool()
                 });
