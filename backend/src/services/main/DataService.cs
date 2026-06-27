@@ -57,7 +57,7 @@ namespace PetStore.Services
                 {
                     Id = _comb.Create(),
                     Name = f.Name.FirstName(),
-                    Status = f.PickRandom(null, "available", "pending", "sold"),
+                    Status = f.PickRandom("available", "pending", "sold").OrNull(f, .25f),
                     CategoryId = f.PickRandom(categoryIds),
                     PhotoUrls = Enumerable.Range(0, f.Random.Int(1, 4))
                         .Select(_ => new PetPhoto { Id = _comb.Create(), Url = f.Internet.Url() })
@@ -79,9 +79,9 @@ namespace PetStore.Services
                 {
                     Id = _comb.Create(),
                     PetId = f.PickRandom(petIds),
-                    Quantity = f.Random.Bool() ? (int?)null : (int?)f.Random.Int(1, 10),
-                    ShipDate = f.Random.Bool() ? (DateTime?)null : (DateTime?)f.Date.Future(),
-                    Status = f.PickRandom(null, "placed", "approved", "delivered"),
+                    Quantity = f.Random.Int(1, 10).OrNull(f, .25f),
+                    ShipDate = DateTime.SpecifyKind(f.Date.Future(), DateTimeKind.Utc).OrNull(f, .25f),
+                    Status = f.PickRandom("placed", "approved", "delivered").OrNull(f, .25f),
                     Complete = f.Random.Bool()
                 });
             }
@@ -95,11 +95,11 @@ namespace PetStore.Services
                 {
                     Id = _comb.Create(),
                     Username = f.Internet.UserName() + "_" + i,
-                    FirstName = f.PickRandom(null, f.Name.FirstName()),
-                    LastName = f.PickRandom(null, f.Name.LastName()),
-                    Email = f.PickRandom(null, f.Internet.Email()),
+                    FirstName = f.Name.FirstName().OrNull(f, .25f),
+                    LastName = f.Name.LastName().OrNull(f, .25f),
+                    Email = f.Internet.Email().OrNull(f, .25f),
                     Password = f.Internet.Password(),
-                    Phone = f.PickRandom(null, f.Phone.PhoneNumber()),
+                    Phone = f.Phone.PhoneNumber().OrNull(f, .25f),
                     UserStatus = f.Random.Int(0, 2)
                 });
             }
