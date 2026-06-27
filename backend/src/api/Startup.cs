@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,8 @@ namespace PetStore.Api
             var db = scope.ServiceProvider.GetRequiredService<PetStoreContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Startup>>();
 
+            WaitForDatabase(db, logger);
+
             db.Database.EnsureCreated();
 
             if (db.Pets.Any())
@@ -50,6 +53,21 @@ namespace PetStore.Api
             var dataService = scope.ServiceProvider.GetRequiredService<IDataService>();
             dataService.SeedAsync(CancellationToken.None).GetAwaiter().GetResult();
             logger.LogInformation("Seed data imported from embedded resource.");
+        }
+
+        private static void WaitForDatabase(PetStoreContext db, ILogger<Startup> logger)
+        {
+            var retries = 10;
+            while (retries-- > 0)
+            {
+                if (db.Database.CanConnect())
+                    return;
+
+                logger.LogWarning("Database not ready, retrying in 3 s... ({Retries} left)", retries);
+                Thread.Sleep(TimeSpan.FromSeconds(3));
+            }
+
+            throw new InvalidOperationException("Database did not become available after retries.");
         }
     }
 }
