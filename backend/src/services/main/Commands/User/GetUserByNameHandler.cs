@@ -20,19 +20,22 @@ namespace PetStore.Services.Commands.User
 
         public async ValueTask<UserDto> Handle(GetUserByNameRequest request, CancellationToken cancellationToken)
         {
-            return await _db.Users
+            var user = await _db.Users
                 .Where(u => u.Username == request.Username)
-                .Select(u => new UserDto
-                {
-                    Id = u.Id,
-                    Username = u.Username,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    Phone = u.Phone,
-                    UserStatus = u.UserStatus
-                })
                 .FirstOrDefaultAsync(cancellationToken);
+
+            if (user == null) return null;
+
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Phone,
+                UserStatus = user.UserStatus
+            };
         }
     }
 }

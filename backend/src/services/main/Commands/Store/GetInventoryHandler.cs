@@ -20,15 +20,9 @@ namespace PetStore.Services.Commands.Store
 
         public async ValueTask<IDictionary<string, int>> Handle(GetInventoryRequest request, CancellationToken cancellationToken)
         {
-            var groups = await _db.Pets
-                .GroupBy(p => p.Status)
-                .Select(g => new { Status = g.Key, Count = g.Count() })
-                .ToListAsync(cancellationToken);
-
-            return groups.ToDictionary(
-                g => g.Status ?? "unknown",
-                g => g.Count
-            );
+            var pets = await _db.Pets.ToListAsync(cancellationToken);
+            return pets.GroupBy(p => p.Status)
+                .ToDictionary(g => g.Key ?? "unknown", g => g.Count());
         }
     }
 }

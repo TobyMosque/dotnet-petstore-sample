@@ -224,7 +224,7 @@ namespace PetStore.Services
             if (extracted.TryGetValue("orders.csv", out var orderBytes))
             {
                 var rows = FromCsv<OrderRow>(orderBytes, csvConfig);
-                var orders = rows.Select(r => new Order { Id = r.Id, PetId = r.PetId, Quantity = r.Quantity, ShipDate = r.ShipDate, Status = r.Status, Complete = r.Complete }).ToList();
+                var orders = rows.Select(r => new Order { Id = r.Id, PetId = r.PetId, Quantity = r.Quantity, ShipDate = r.ShipDate.HasValue ? DateTime.SpecifyKind(r.ShipDate.Value, DateTimeKind.Utc) : (DateTime?)null, Status = r.Status, Complete = r.Complete }).ToList();
                 await _db.Orders.AddRangeAsync(orders, ct);
                 await _db.SaveChangesAsync(ct);
             }
