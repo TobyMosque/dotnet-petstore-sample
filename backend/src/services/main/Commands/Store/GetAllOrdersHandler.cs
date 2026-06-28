@@ -21,17 +21,16 @@ namespace PetStore.Services.Commands.Store
 
         public async ValueTask<IList<OrderDto>> Handle(GetAllOrdersRequest request, CancellationToken cancellationToken)
         {
-            return await _db.Orders
-                .Select(o => new OrderDto
-                {
-                    Id = o.Id,
-                    PetId = o.PetId,
-                    Quantity = o.Quantity,
-                    ShipDate = o.ShipDate,
-                    Status = o.Status,
-                    Complete = o.Complete
-                })
-                .ToListAsync(cancellationToken);
+            var orders = await _db.Orders.ToListAsync(cancellationToken);
+            return orders.Select(o => new OrderDto
+            {
+                Id = o.Id,
+                PetId = o.PetId,
+                Quantity = o.Quantity,
+                ShipDate = o.ShipDate,
+                Status = o.Status,
+                Complete = o.Complete
+            }).ToList();
         }
     }
 }
