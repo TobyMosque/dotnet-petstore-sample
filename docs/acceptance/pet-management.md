@@ -31,6 +31,7 @@ The customer requests pets filtered by the status value `"available"`.
 - Requesting `status=pending` returns only pending pets.
 - Requesting `status=sold` returns only sold pets.
 - A pet whose status is `null` does **not** appear in any status-filtered result.
+- Calling `GET /pet/findByStatus` **without a `status` parameter** returns all pets whose status is `null`. The result must be a non-empty array when the dataset contains pets with a null status.
 
 **Verification:** call `GET /pet/findByStatus?status=available`, confirm every returned pet has `"status": "available"`.
 
